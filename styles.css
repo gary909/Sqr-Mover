@@ -4,7 +4,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #b87070;
+  background-color: #333131;
   overflow: hidden;
   position: relative;
 }
@@ -27,7 +27,7 @@ body {
       rgba(255, 0, 0, 0.15) 51%,
       transparent 52%
     ),
-    #131313;
+    #424242;
   background-size: 100% 3px; /* Tighter scanline spacing */
   position: absolute;
   top: 0;
@@ -45,7 +45,7 @@ body {
   background-size: 100% 2px;
   z-index: 1; /* Layer the scanlines above the CRT effect */
   pointer-events: none;
-  opacity: 0.6; /* Slightly lower opacity but still noticeable */
+  opacity: 0.8; /* Slightly lower opacity but still noticeable */
   mix-blend-mode: overlay;
 }
 
@@ -60,5 +60,5 @@ body {
   filter: blur(4px); /* Stronger blur for a more pronounced glow */
   mix-blend-mode: screen;
   opacity: 0.8; /* High opacity for a bright glow */
-  background: radial-gradient(circle, rgba(0, 255, 100, 0.4), transparent 60%);
+  background: radial-gradient(circle, rgba(0, 255, 100, 0.2), transparent 60%);
 }

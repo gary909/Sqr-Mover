@@ -1,31 +1,37 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const square = document.getElementById("square");
-  let position = { top: 50, left: 50 };
-  const step = 10;
+const square = document.getElementById("square");
+const moveSpeed = 10; // Speed of movement
 
-  function moveSquare(event) {
-    switch (event.key) {
-      case "w":
-      case "ArrowUp":
-        position.top -= step;
-        break;
-      case "a":
-      case "ArrowLeft":
-        position.left -= step;
-        break;
-      case "s":
-      case "ArrowDown":
-        position.top += step;
-        break;
-      case "d":
-      case "ArrowRight":
-        position.left += step;
-        break;
-    }
+document.addEventListener("keydown", function (event) {
+  const rect = square.getBoundingClientRect();
 
-    square.style.top = position.top + "px";
-    square.style.left = position.left + "px";
+  switch (event.key) {
+    case "ArrowUp":
+    case "w":
+      if (rect.top > 0) {
+        // Prevent moving outside the top boundary
+        square.style.top = `${rect.top - moveSpeed}px`;
+      }
+      break;
+    case "ArrowDown":
+    case "s":
+      if (rect.bottom < window.innerHeight) {
+        // Prevent moving outside the bottom boundary
+        square.style.top = `${rect.top + moveSpeed}px`;
+      }
+      break;
+    case "ArrowLeft":
+    case "a":
+      if (rect.left > 0) {
+        // Prevent moving outside the left boundary
+        square.style.left = `${rect.left - moveSpeed}px`;
+      }
+      break;
+    case "ArrowRight":
+    case "d":
+      if (rect.right < window.innerWidth) {
+        // Prevent moving outside the right boundary
+        square.style.left = `${rect.left + moveSpeed}px`;
+      }
+      break;
   }
-
-  document.addEventListener("keydown", moveSquare);
 });
