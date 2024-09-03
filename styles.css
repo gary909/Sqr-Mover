@@ -13,6 +13,7 @@ p {
   color: #00ff2a;
   z-index: 5; /* Ensure the text is above all effect layers */
   animation: textShadow 1.6s infinite;
+  transition: opacity 0.3s ease; /* Smooth fade-out effect */
 }
 
 #square {

@@ -1,37 +1,80 @@
-const square = document.getElementById("square");
-const moveSpeed = 10; // Speed of movement
+document.addEventListener("DOMContentLoaded", () => {
+  const square = document.getElementById("square");
+  const text = document.getElementById("text");
 
-document.addEventListener("keydown", function (event) {
-  const rect = square.getBoundingClientRect();
+  let x = 0;
+  let y = 0;
 
-  switch (event.key) {
-    case "ArrowUp":
-    case "w":
-      if (rect.top > 0) {
-        // Prevent moving outside the top boundary
-        square.style.top = `${rect.top - moveSpeed}px`;
-      }
-      break;
-    case "ArrowDown":
-    case "s":
-      if (rect.bottom < window.innerHeight) {
-        // Prevent moving outside the bottom boundary
-        square.style.top = `${rect.top + moveSpeed}px`;
-      }
-      break;
-    case "ArrowLeft":
-    case "a":
-      if (rect.left > 0) {
-        // Prevent moving outside the left boundary
-        square.style.left = `${rect.left - moveSpeed}px`;
-      }
-      break;
-    case "ArrowRight":
-    case "d":
-      if (rect.right < window.innerWidth) {
-        // Prevent moving outside the right boundary
-        square.style.left = `${rect.left + moveSpeed}px`;
-      }
-      break;
+  // Function to center the square on the screen
+  function centerSquare() {
+    x = (window.innerWidth - square.offsetWidth) / 2;
+    y = (window.innerHeight - square.offsetHeight) / 2;
+    square.style.left = `${x}px`;
+    square.style.top = `${y}px`;
   }
+
+  // Function to randomize text position
+  function randomizeTextPosition() {
+    const textWidth = text.offsetWidth;
+    const textHeight = text.offsetHeight;
+
+    const maxX = window.innerWidth - textWidth;
+    const maxY = window.innerHeight - textHeight;
+
+    const randomX = Math.floor(Math.random() * maxX);
+    const randomY = Math.floor(Math.random() * maxY);
+
+    text.style.position = "absolute";
+    text.style.left = `${randomX}px`;
+    text.style.top = `${randomY}px`;
+  }
+
+  // Function to check for collision between the square and text
+  function checkCollision() {
+    const squareRect = square.getBoundingClientRect();
+    const textRect = text.getBoundingClientRect();
+
+    const overlap = !(
+      squareRect.right < textRect.left ||
+      squareRect.left > textRect.right ||
+      squareRect.bottom < textRect.top ||
+      squareRect.top > textRect.bottom
+    );
+
+    if (overlap) {
+      text.style.display = "none"; // Permanently hide the text
+    }
+  }
+
+  // Event listener to move the square with keyboard keys
+  document.addEventListener("keydown", (event) => {
+    const step = 5;
+
+    switch (event.key) {
+      case "ArrowUp":
+      case "w":
+        y = Math.max(y - step, 0); // Prevent moving out of bounds (top)
+        break;
+      case "ArrowDown":
+      case "s":
+        y = Math.min(y + step, window.innerHeight - square.offsetHeight); // Prevent moving out of bounds (bottom)
+        break;
+      case "ArrowLeft":
+      case "a":
+        x = Math.max(x - step, 0); // Prevent moving out of bounds (left)
+        break;
+      case "ArrowRight":
+      case "d":
+        x = Math.min(x + step, window.innerWidth - square.offsetWidth); // Prevent moving out of bounds (right)
+        break;
+    }
+
+    square.style.left = `${x}px`;
+    square.style.top = `${y}px`;
+    checkCollision();
+  });
+
+  // Center the square and randomize text position when the page loads
+  centerSquare();
+  randomizeTextPosition();
 });
