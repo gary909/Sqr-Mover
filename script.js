@@ -29,6 +29,19 @@ document.addEventListener("DOMContentLoaded", () => {
     text.style.top = `${randomY}px`;
   }
 
+  // Function to split text into individual letters and animate them
+  function animateTextFall() {
+    const letters = text.textContent.split("");
+    text.innerHTML = "";
+
+    letters.forEach((letter, index) => {
+      const span = document.createElement("span");
+      span.textContent = letter;
+      span.style.animationDelay = `${index * 0.1}s`;
+      text.appendChild(span);
+    });
+  }
+
   // Function to check for collision between the square and text
   function checkCollision() {
     const squareRect = square.getBoundingClientRect();
@@ -42,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
     if (overlap) {
-      text.style.display = "none"; // Permanently hide the text
+      animateTextFall();
     }
   }
 

@@ -160,3 +160,32 @@ p {
 .crt {
   animation: textShadow 1.6s infinite;
 }
+
+/*************************************************/
+
+@keyframes fallWithTrail {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+#text {
+  display: inline-block;
+  position: absolute;
+}
+
+#text span {
+  display: inline-block;
+  opacity: 1;
+  animation: fallWithTrail 1.5s ease-in-out forwards;
+}
+
+/*************************************************/
